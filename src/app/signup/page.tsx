@@ -1,0 +1,266 @@
+"use client";
+
+import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
+
+export default function SignUp() {
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    password: "",
+    confirmPassword: "",
+    referralCode: "",
+    country: "US"
+  });
+
+  const [agreeToTerms, setAgreeToTerms] = useState(false);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    let value = e.target.value;
+    
+    // Format phone number for US numbers
+    if (e.target.name === 'phone') {
+      // Remove all non-digits
+      const digits = value.replace(/\D/g, '');
+      
+      // Format as (XXX) XXX-XXXX
+      if (digits.length >= 10) {
+        value = `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6, 10)}`;
+      } else if (digits.length >= 6) {
+        value = `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
+      } else if (digits.length >= 3) {
+        value = `(${digits.slice(0, 3)}) ${digits.slice(3)}`;
+      } else {
+        value = digits;
+      }
+    }
+    
+    setFormData({
+      ...formData,
+      [e.target.name]: value
+    });
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-green-500 via-green-550 to-green-600 animate-gradient flex flex-col relative overflow-hidden">
+      {/* Background decoration */}
+      <div className="absolute inset-0 opacity-10">
+        <div className="absolute top-20 left-20 w-72 h-72 sm:w-80 sm:h-80 bg-white/20 rounded-full blur-3xl animate-pulse-subtle"></div>
+        <div className="absolute bottom-20 right-20 w-96 h-96 sm:w-[28rem] sm:h-[28rem] bg-white/15 rounded-full blur-3xl animate-float"></div>
+        <div className="absolute top-1/3 left-1/3 w-40 h-40 bg-white/8 rounded-full blur-2xl animate-pulse-subtle" style={{animationDelay: '2s'}}></div>
+      </div>
+      
+      {/* Back Button */}
+      <div className="absolute top-8 left-8 z-20 animate-fade-in-up">
+        <Link href="/">
+          <button className="w-12 h-12 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-all duration-300 backdrop-blur-sm border border-white/20 hover:border-white/40">
+            <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+        </Link>
+      </div>
+
+      {/* Main Content Container */}
+      <div className="flex-1 flex flex-col justify-center items-center z-10 px-6 py-12">
+        
+        {/* Logo Section */}
+        <div className="mb-10 animate-fade-in-up" style={{animationDelay: '0.1s'}}>
+          <div className="flex items-center justify-center">
+            <Image
+              src="/logo.png"
+              alt="GO Pick up Logo"
+              width={220}
+              height={73}
+              priority
+              className="object-contain hover:scale-105 transition-all duration-300 animate-float drop-shadow-lg"
+            />
+          </div>
+        </div>
+
+        {/* Sign Up Title */}
+        <div className="mb-8 animate-fade-in-up" style={{animationDelay: '0.1s'}}>
+          <h1 className="text-white text-3xl font-bold text-center">Sign Up</h1>
+        </div>
+
+        {/* Form Container */}
+        <div className="w-full max-w-md animate-fade-in-up" style={{animationDelay: '0.2s'}}>
+          <form className="space-y-6">
+            
+            {/* Name Fields Row */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* First Name */}
+              <div className="relative group">
+                <input
+                  type="text"
+                  name="firstName"
+                  value={formData.firstName}
+                  onChange={handleChange}
+                  className="w-full px-6 py-4 bg-white/15 backdrop-blur-md border-2 border-white/30 rounded-3xl text-white placeholder-transparent transition-all duration-300 focus:outline-none focus:border-white/70 focus:bg-white/25 focus:ring-4 focus:ring-white/15 text-base peer shadow-lg group-hover:border-white/50 hover:shadow-xl"
+                  placeholder="First Name"
+                  required
+                />
+                <label className="absolute left-6 top-4 text-white/80 text-base transition-all duration-300 pointer-events-none peer-focus:-translate-y-12 peer-focus:translate-x-1 peer-focus:scale-75 peer-focus:text-white peer-focus:font-medium peer-focus:bg-green-600 peer-focus:px-2 peer-focus:py-1 peer-focus:rounded-full peer-[:not(:placeholder-shown)]:-translate-y-12 peer-[:not(:placeholder-shown)]:translate-x-1 peer-[:not(:placeholder-shown)]:scale-75 peer-[:not(:placeholder-shown)]:text-white peer-[:not(:placeholder-shown)]:font-medium peer-[:not(:placeholder-shown)]:bg-green-600 peer-[:not(:placeholder-shown)]:px-2 peer-[:not(:placeholder-shown)]:py-1 peer-[:not(:placeholder-shown)]:rounded-full">
+                  First Name
+                </label>
+              </div>
+
+              {/* Last Name */}
+              <div className="relative group">
+                <input
+                  type="text"
+                  name="lastName"
+                  value={formData.lastName}
+                  onChange={handleChange}
+                  className="w-full px-6 py-4 bg-white/15 backdrop-blur-md border-2 border-white/30 rounded-3xl text-white placeholder-transparent transition-all duration-300 focus:outline-none focus:border-white/70 focus:bg-white/25 focus:ring-4 focus:ring-white/15 text-base peer shadow-lg group-hover:border-white/50 hover:shadow-xl"
+                  placeholder="Last Name"
+                  required
+                />
+                <label className="absolute left-6 top-4 text-white/80 text-base transition-all duration-300 pointer-events-none peer-focus:-translate-y-12 peer-focus:translate-x-1 peer-focus:scale-75 peer-focus:text-white peer-focus:font-medium peer-focus:bg-green-600 peer-focus:px-2 peer-focus:py-1 peer-focus:rounded-full peer-[:not(:placeholder-shown)]:-translate-y-12 peer-[:not(:placeholder-shown)]:translate-x-1 peer-[:not(:placeholder-shown)]:scale-75 peer-[:not(:placeholder-shown)]:text-white peer-[:not(:placeholder-shown)]:font-medium peer-[:not(:placeholder-shown)]:bg-green-600 peer-[:not(:placeholder-shown)]:px-2 peer-[:not(:placeholder-shown)]:py-1 peer-[:not(:placeholder-shown)]:rounded-full">
+                  Last Name
+                </label>
+              </div>
+            </div>
+
+            {/* Email Field */}
+            <div className="relative group">
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                className="w-full px-6 py-4 bg-white/15 backdrop-blur-md border-2 border-white/30 rounded-3xl text-white placeholder-transparent transition-all duration-300 focus:outline-none focus:border-white/70 focus:bg-white/25 focus:ring-4 focus:ring-white/15 text-base peer shadow-lg group-hover:border-white/50 hover:shadow-xl"
+                placeholder="Email"
+                required
+              />
+              <label className="absolute left-6 top-4 text-white/80 text-base transition-all duration-300 pointer-events-none peer-focus:-translate-y-12 peer-focus:translate-x-1 peer-focus:scale-75 peer-focus:text-white peer-focus:font-medium peer-focus:bg-green-600 peer-focus:px-2 peer-focus:py-1 peer-focus:rounded-full peer-[:not(:placeholder-shown)]:-translate-y-12 peer-[:not(:placeholder-shown)]:translate-x-1 peer-[:not(:placeholder-shown)]:scale-75 peer-[:not(:placeholder-shown)]:text-white peer-[:not(:placeholder-shown)]:font-medium peer-[:not(:placeholder-shown)]:bg-green-600 peer-[:not(:placeholder-shown)]:px-2 peer-[:not(:placeholder-shown)]:py-1 peer-[:not(:placeholder-shown)]:rounded-full">
+                Email Address
+              </label>
+              <div className="absolute right-6 top-4 opacity-0 peer-valid:opacity-100 transition-opacity duration-300">
+                <svg className="w-5 h-5 text-green-300" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                </svg>
+              </div>
+            </div>
+
+            {/* Phone Number with Country Code */}
+            <div className="relative group">
+              <div className="relative">
+                <input
+                  type="tel"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  className="w-full pl-16 pr-6 py-4 bg-white/15 backdrop-blur-md border-2 border-white/30 rounded-3xl text-white placeholder-transparent transition-all duration-300 focus:outline-none focus:border-white/70 focus:bg-white/25 focus:ring-4 focus:ring-white/15 text-base peer shadow-lg group-hover:border-white/50 hover:shadow-xl"
+                  placeholder="Phone Number"
+                  maxLength={14}
+                />
+                {/* Country Code Prefix */}
+                <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white/70 text-base pointer-events-none">
+                  +1
+                </div>
+              </div>
+              <label className="absolute left-16 top-4 text-white/80 text-base transition-all duration-300 pointer-events-none peer-focus:-translate-y-12 peer-focus:translate-x-1 peer-focus:scale-75 peer-focus:text-white peer-focus:font-medium peer-focus:bg-green-600 peer-focus:px-2 peer-focus:py-1 peer-focus:rounded-full peer-[:not(:placeholder-shown)]:-translate-y-12 peer-[:not(:placeholder-shown)]:translate-x-1 peer-[:not(:placeholder-shown)]:scale-75 peer-[:not(:placeholder-shown)]:text-white peer-[:not(:placeholder-shown)]:font-medium peer-[:not(:placeholder-shown)]:bg-green-600 peer-[:not(:placeholder-shown)]:px-2 peer-[:not(:placeholder-shown)]:py-1 peer-[:not(:placeholder-shown)]:rounded-full">
+                Phone Number
+              </label>
+            </div>
+
+            {/* Password Fields Row */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Password */}
+              <div className="relative group">
+                <input
+                  type="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  className="w-full px-6 py-4 bg-white/15 backdrop-blur-md border-2 border-white/30 rounded-3xl text-white placeholder-transparent transition-all duration-300 focus:outline-none focus:border-white/70 focus:bg-white/25 focus:ring-4 focus:ring-white/15 text-base peer shadow-lg group-hover:border-white/50 hover:shadow-xl"
+                  placeholder="Password"
+                  required
+                />
+                <label className="absolute left-6 top-4 text-white/80 text-base transition-all duration-300 pointer-events-none peer-focus:-translate-y-12 peer-focus:translate-x-1 peer-focus:scale-75 peer-focus:text-white peer-focus:font-medium peer-focus:bg-green-600 peer-focus:px-2 peer-focus:py-1 peer-focus:rounded-full peer-[:not(:placeholder-shown)]:-translate-y-12 peer-[:not(:placeholder-shown)]:translate-x-1 peer-[:not(:placeholder-shown)]:scale-75 peer-[:not(:placeholder-shown)]:text-white peer-[:not(:placeholder-shown)]:font-medium peer-[:not(:placeholder-shown)]:bg-green-600 peer-[:not(:placeholder-shown)]:px-2 peer-[:not(:placeholder-shown)]:py-1 peer-[:not(:placeholder-shown)]:rounded-full">
+                  Password
+                </label>
+              </div>
+
+              {/* Confirm Password */}
+              <div className="relative group">
+                <input
+                  type="password"
+                  name="confirmPassword"
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
+                  className="w-full px-6 py-4 bg-white/15 backdrop-blur-md border-2 border-white/30 rounded-3xl text-white placeholder-transparent transition-all duration-300 focus:outline-none focus:border-white/70 focus:bg-white/25 focus:ring-4 focus:ring-white/15 text-base peer shadow-lg group-hover:border-white/50 hover:shadow-xl"
+                  placeholder="Confirm Password"
+                  required
+                />
+                <label className="absolute left-6 top-4 text-white/80 text-base transition-all duration-300 pointer-events-none peer-focus:-translate-y-12 peer-focus:translate-x-1 peer-focus:scale-75 peer-focus:text-white peer-focus:font-medium peer-focus:bg-green-600 peer-focus:px-2 peer-focus:py-1 peer-focus:rounded-full peer-[:not(:placeholder-shown)]:-translate-y-12 peer-[:not(:placeholder-shown)]:translate-x-1 peer-[:not(:placeholder-shown)]:scale-75 peer-[:not(:placeholder-shown)]:text-white peer-[:not(:placeholder-shown)]:font-medium peer-[:not(:placeholder-shown)]:bg-green-600 peer-[:not(:placeholder-shown)]:px-2 peer-[:not(:placeholder-shown)]:py-1 peer-[:not(:placeholder-shown)]:rounded-full">
+                  Confirm Password
+                </label>
+              </div>
+            </div>
+
+            {/* Referral Code Field */}
+            <div className="relative group">
+              <input
+                type="text"
+                name="referralCode"
+                value={formData.referralCode}
+                onChange={handleChange}
+                className="w-full px-6 py-4 bg-white/15 backdrop-blur-md border-2 border-white/30 rounded-3xl text-white placeholder-transparent transition-all duration-300 focus:outline-none focus:border-white/70 focus:bg-white/25 focus:ring-4 focus:ring-white/15 text-base peer shadow-lg group-hover:border-white/50 hover:shadow-xl"
+                placeholder="Referral Code (Optional)"
+              />
+              <label className="absolute left-6 top-4 text-white/80 text-base transition-all duration-300 pointer-events-none peer-focus:-translate-y-12 peer-focus:translate-x-1 peer-focus:scale-75 peer-focus:text-white peer-focus:font-medium peer-focus:bg-green-600 peer-focus:px-2 peer-focus:py-1 peer-focus:rounded-full peer-[:not(:placeholder-shown)]:-translate-y-12 peer-[:not(:placeholder-shown)]:translate-x-1 peer-[:not(:placeholder-shown)]:scale-75 peer-[:not(:placeholder-shown)]:text-white peer-[:not(:placeholder-shown)]:font-medium peer-[:not(:placeholder-shown)]:bg-green-600 peer-[:not(:placeholder-shown)]:px-2 peer-[:not(:placeholder-shown)]:py-1 peer-[:not(:placeholder-shown)]:rounded-full">
+                Referral Code (Optional)
+              </label>
+            </div>
+
+            {/* Terms and Conditions */}
+            <div className="flex items-start space-x-3">
+              <input
+                type="checkbox"
+                id="agreeToTerms"
+                checked={agreeToTerms}
+                onChange={(e) => setAgreeToTerms(e.target.checked)}
+                className="mt-1 w-4 h-4 text-green-600 bg-white/20 border-white/30 rounded focus:ring-green-500 focus:ring-2"
+              />
+              <label htmlFor="agreeToTerms" className="text-white/90 text-sm leading-5">
+                By continuing, you agree to our{' '}
+                <Link href="/terms" className="underline hover:text-white">
+                  Terms of Service
+                </Link>
+                {' '}and{' '}
+                <Link href="/privacy" className="underline hover:text-white">
+                  Privacy Policy
+                </Link>
+              </label>
+            </div>
+
+            {/* Sign Up Button */}
+            <button 
+              type="submit"
+              disabled={!agreeToTerms}
+              className="w-full bg-white hover:bg-gray-50 disabled:bg-gray-400 disabled:cursor-not-allowed text-gray-800 font-semibold py-4 px-8 rounded-3xl transition-all duration-300 transform hover:scale-[1.02] hover:shadow-2xl active:scale-[0.98] focus:outline-none focus:ring-4 focus:ring-white/30 text-lg shadow-lg"
+            >
+              Sign Up
+            </button>
+
+            {/* Login Link */}
+            <div className="text-center">
+              <p className="text-white/80 text-base">
+                Already have an account?{' '}
+                <Link href="/login" className="text-white underline hover:text-white/90 font-medium">
+                  Login here
+                </Link>
+              </p>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+}
