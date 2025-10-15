@@ -2,11 +2,16 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function Home() {
   const [expandedSection, setExpandedSection] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    setIsLoaded(true);
+  }, []);
 
   const toggleSection = (section: string) => {
     setExpandedSection(expandedSection === section ? null : section);
@@ -41,18 +46,15 @@ export default function Home() {
               </button>
             </div>
 
-            {/* Logo */}
-            <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center">
-                <Image 
-                  src="/logo.png" 
-                  alt="GO Pick up Logo" 
-                  width={24} 
-                  height={24}
-                  className="object-contain"
-                />
-              </div>
-              <span className="text-white font-bold text-lg hidden md:block">Pick up</span>
+            {/* Logo image only (no wrapper) */}
+            <div className="flex items-center">
+              <Image
+                src="/logo.png"
+                alt="GO"
+                width={90}
+                height={90}
+                className="object-contain drop-shadow-sm"
+              />
             </div>
 
             {/* Navigation Links - Desktop */}
@@ -102,50 +104,70 @@ export default function Home() {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {/* Dashboard Stats Section */}
+        <div className={`stats-grid grid grid-cols-1 md:grid-cols-4 gap-6 mb-12 transition-opacity duration-1000 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>
+          <div className="bg-white rounded-xl shadow-lg p-6 text-center">
+            <div className="text-3xl font-bold text-green-600 mb-2">247</div>
+            <div className="text-gray-600">Total Deliveries</div>
+          </div>
+          <div className="bg-white rounded-xl shadow-lg p-6 text-center">
+            <div className="text-3xl font-bold text-blue-600 mb-2">12</div>
+            <div className="text-gray-600">Active Orders</div>
+          </div>
+          <div className="bg-white rounded-xl shadow-lg p-6 text-center">
+            <div className="text-3xl font-bold text-purple-600 mb-2">98%</div>
+            <div className="text-gray-600">On-Time Rate</div>
+          </div>
+          <div className="bg-white rounded-xl shadow-lg p-6 text-center">
+            <div className="text-3xl font-bold text-orange-600 mb-2">₦2.5M</div>
+            <div className="text-gray-600">Monthly Revenue</div>
+          </div>
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-10">
           
           {/* Left Column - Main Content */}
           <div className="lg:col-span-3 space-y-10">
             
             {/* Hero Section */}
-            <div className="bg-white rounded-2xl shadow-lg p-10">
-              <h1 className="text-5xl font-bold text-gray-800 mb-6 leading-tight">
+            <div className={`bg-white rounded-2xl shadow-lg p-10 transition-all duration-1000 transform ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+              <h1 className="hero-title text-5xl font-bold text-gray-800 mb-6 leading-tight animate-fade-in">
                 Timely deliveries, every time.{" "}
-                <span className="text-green-600">Your materials, our priority</span>
+                <span className="text-green-600 bg-gradient-to-r from-green-500 to-green-600 bg-clip-text text-transparent">Your materials, our priority</span>
               </h1>
               
               {/* Coal Section */}
-              <div className="mt-10 bg-gray-50 rounded-xl p-8 flex items-center justify-between">
+              <div className="mt-10 bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl p-8 flex items-center justify-between hover:shadow-md transition-shadow">
                 <div>
                   <h3 className="text-2xl font-semibold text-gray-800 mb-3">Coal</h3>
                   <p className="text-gray-600 text-base mb-4">Available</p>
-                  <button className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-full font-semibold transition-colors text-base">
+                  <button className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 text-base">
                     Buy
                   </button>
                 </div>
-                <div className="text-8xl">⚫</div>
+                <div className="text-8xl animate-pulse">⚫</div>
               </div>
 
               {/* Download App Section */}
-              <div className="mt-10 bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-8 relative overflow-hidden">
+              <div className="mt-10 bg-gradient-to-br from-green-50 via-green-100 to-emerald-50 rounded-xl p-8 relative overflow-hidden hover:shadow-lg transition-shadow">
                 <div className="flex items-center justify-between">
                   <div>
                     <div className="flex items-center space-x-4 mb-6">
-                      <div className="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center">
+                      <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center shadow-lg">
                         <span className="text-white font-bold text-lg">GO</span>
                       </div>
                       <span className="text-green-800 font-bold text-2xl">Pick up</span>
                     </div>
-                    <button className="bg-white border-2 border-green-600 text-green-600 hover:bg-green-50 px-10 py-4 rounded-full font-semibold transition-colors text-lg">
+                    <button className="bg-white border-2 border-green-600 text-green-600 hover:bg-green-50 px-10 py-4 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 text-lg shadow-md">
                       Download App
                     </button>
                   </div>
-                  <div className="text-9xl opacity-20">🚚</div>
+                  <div className="text-9xl opacity-20 animate-bounce">🚚</div>
                 </div>
               </div>
 
               {/* Time is Money Section */}
-              <div className="mt-10 bg-gradient-to-r from-gray-800 to-gray-700 rounded-xl p-8 text-white relative overflow-hidden">
+              <div className="mt-10 bg-gradient-to-r from-gray-800 via-gray-700 to-slate-800 rounded-xl p-8 text-white relative overflow-hidden hover:shadow-2xl transition-shadow">
                 <div className="relative z-10">
                   <h3 className="text-2xl font-bold mb-4">Time is money</h3>
                   <p className="text-gray-300 text-base mb-6 leading-relaxed">
@@ -155,7 +177,7 @@ export default function Home() {
                     with right haulage...
                   </p>
                 </div>
-                <div className="absolute right-6 top-1/2 transform -translate-y-1/2 text-8xl opacity-30">⏰</div>
+                <div className="absolute right-6 top-1/2 transform -translate-y-1/2 text-8xl opacity-30 animate-pulse">⏰</div>
               </div>
             </div>
           </div>
@@ -191,7 +213,7 @@ export default function Home() {
             {/* Services Sections */}
             <div className="space-y-3">
               {servicesSections.map((section) => (
-                <div key={section.id} className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+                <div key={section.id} className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow">
                   <button
                     onClick={() => toggleSection(section.id)}
                     className="w-full flex items-center justify-between p-5 hover:bg-gray-50 transition-colors"
@@ -201,7 +223,7 @@ export default function Home() {
                       <span className="font-semibold text-gray-800 text-lg">{section.title}</span>
                     </div>
                     <svg
-                      className={`w-5 h-5 text-green-600 transform transition-transform ${
+                      className={`w-5 h-5 text-green-600 transform transition-transform duration-300 ${
                         expandedSection === section.id ? 'rotate-180' : ''
                       }`}
                       fill="none"
@@ -212,10 +234,13 @@ export default function Home() {
                     </svg>
                   </button>
                   {expandedSection === section.id && (
-                    <div className="px-5 pb-5 text-base text-gray-600 border-t border-gray-100">
+                    <div className="px-5 pb-5 text-base text-gray-600 border-t border-gray-100 animate-fade-in">
                       <p className="mt-4">
                         Connect with reliable {section.title.toLowerCase()} in your network for seamless logistics operations.
                       </p>
+                      <Link href={`/${section.id}`} className="inline-block mt-3 text-green-600 hover:text-green-700 font-medium transition-colors">
+                        View {section.title} →
+                      </Link>
                     </div>
                   )}
                 </div>
@@ -246,10 +271,53 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Recent Activities/Testimonials Section */}
+        <section className="mt-16 bg-white rounded-2xl shadow-lg p-8">
+          <h2 className="text-3xl font-bold text-gray-800 mb-8 text-center">Recent Activities & Testimonials</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-6 hover:shadow-md transition-shadow">
+              <div className="flex items-center space-x-4 mb-4">
+                <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center">
+                  <span className="text-white font-bold">JD</span>
+                </div>
+                <div>
+                  <h4 className="font-semibold text-gray-800">John Doe</h4>
+                  <p className="text-gray-600 text-sm">2 hours ago</p>
+                </div>
+              </div>
+              <p className="text-gray-700">Successfully delivered 50 tons of coal to Lagos. Great service!</p>
+            </div>
+            <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-6 hover:shadow-md transition-shadow">
+              <div className="flex items-center space-x-4 mb-4">
+                <div className="w-12 h-12 bg-green-600 rounded-full flex items-center justify-center">
+                  <span className="text-white font-bold">SM</span>
+                </div>
+                <div>
+                  <h4 className="font-semibold text-gray-800">Sarah Miller</h4>
+                  <p className="text-gray-600 text-sm">1 day ago</p>
+                </div>
+              </div>
+              <p className="text-gray-700">Found reliable carriers quickly. On-time delivery every time.</p>
+            </div>
+            <div className="bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl p-6 hover:shadow-md transition-shadow">
+              <div className="flex items-center space-x-4 mb-4">
+                <div className="w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center">
+                  <span className="text-white font-bold">RK</span>
+                </div>
+                <div>
+                  <h4 className="font-semibold text-gray-800">Robert Kim</h4>
+                  <p className="text-gray-600 text-sm">3 days ago</p>
+                </div>
+              </div>
+              <p className="text-gray-700">GO Pickup made logistics effortless. Highly recommend!</p>
+            </div>
+          </div>
+        </section>
+
         {/* Footer Section */}
         <footer className="mt-20 bg-white rounded-2xl shadow-lg p-12">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-            
+
             {/* About Us */}
             <div>
               <h3 className="font-bold text-gray-800 text-xl mb-6">About us:</h3>
@@ -272,7 +340,7 @@ export default function Home() {
               <p className="text-gray-600 text-base leading-relaxed mb-6">
                 A logistics platform that empowers efficiency, trust, and growth in the supply chain.
               </p>
-              
+
               {/* Contact Info */}
               <div className="space-y-3 text-base">
                 <div className="flex items-center space-x-2">

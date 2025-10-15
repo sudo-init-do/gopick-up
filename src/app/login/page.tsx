@@ -40,16 +40,15 @@ export default function Login() {
       {/* Main Content Container */}
       <div className="flex-1 flex flex-col justify-center items-center z-10 px-6 py-12">
         
-        {/* Logo Section */}
+        {/* Logo Section: round image with "Pick up" text */}
         <div className="mb-10 animate-fade-in-up" style={{animationDelay: '0.1s'}}>
           <div className="flex items-center justify-center">
             <Image
               src="/logo.png"
-              alt="GO Pick up Logo"
-              width={220}
-              height={73}
-              priority
-              className="object-contain hover:scale-105 transition-all duration-300 animate-float drop-shadow-lg"
+              alt="GO"
+              width={180}
+              height={180}
+              className="object-contain drop-shadow-md"
             />
           </div>
         </div>
