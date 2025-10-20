@@ -115,7 +115,7 @@ export default function Dashboard() {
                 priority</span>
               </h1>
 
-              <button className="bg-gradient-to-r from-[#8FD19E] to-[#7BC68D] hover:from-[#7BC68D] hover:to-[#6ABF7D] text-gray-800 px-10 py-3.5 rounded-full font-bold mb-10 flex items-center gap-3 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105">
+              <button className="bg-gradient-to-r from-[#8FD19E] to-[#7BC68D] hover:from-[#7BC68D] hover:to-[#6ABF7D] text-gray-800 px-6 md:px-10 py-3.5 rounded-full font-bold mb-6 md:mb-10 flex items-center gap-3 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105">
                 Learn more
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -127,11 +127,11 @@ export default function Dashboard() {
                 <div className="flex-1">
                   <h3 className="text-3xl font-bold text-gray-900 mb-3 bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">Coal</h3>
                   <p className="text-gray-600 text-base mb-6 font-medium">Premium quality coal available for industrial and commercial use</p>
-                  <button className="bg-gradient-to-r from-[#4CAF50] to-[#45a049] hover:from-[#45a049] hover:to-[#3d8b40] text-white px-12 py-3.5 rounded-full font-bold transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105">
+                  <button className="bg-gradient-to-r from-[#4CAF50] to-[#45a049] hover:from-[#45a049] hover:to-[#3d8b40] text-white px-8 md:px-12 py-3.5 rounded-full font-bold transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105">
                     Buy Now
                   </button>
                 </div>
-                <div className="w-40 h-40 flex items-center justify-center ml-8">
+                <div className="w-32 h-32 md:w-40 md:h-40 flex items-center justify-center ml-4 md:ml-8">
                   <Image
                     src="/coal.png"
                     alt="High quality coal for industrial use"
@@ -154,7 +154,7 @@ export default function Dashboard() {
                       <span className="text-gray-600 text-sm font-medium">Reliable logistics solutions</span>
                     </div>
                   </div>
-                  <div className="w-64">
+                  <div className="w-48 md:w-64">
                     <Image
                       src="/truck.jpg"
                       alt="Modern delivery truck for logistics and transportation"
@@ -274,7 +274,7 @@ export default function Dashboard() {
           </div>
 
           <div className="bg-white rounded-b-2xl shadow-2xl overflow-hidden">
-            <div className="grid grid-cols-4 gap-0">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-0">
               <div className="relative h-80 flex items-center justify-center">
                 <Image
                   src="/Van.png"
