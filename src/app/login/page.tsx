@@ -3,18 +3,28 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { useAuth } from "../context/AuthContext";
 import { useRouter } from "next/navigation";
 
 export default function Login() {
+  const { login } = useAuth();
+  const [error, setError] = useState("");
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // For now, redirect to dashboard on any login attempt
-    // In a real app, you would validate credentials here
-    router.push('/dashboard');
+    setError("");
+
+    // Attempt login
+    const success = login(email, password);
+
+    if (success) {
+      router.push('/dashboard');
+    } else {
+      setError("Invalid email or password");
+    }
   };
 
   return (
