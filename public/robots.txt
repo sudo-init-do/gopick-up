@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://bank-frontend-t6q9.onrender.com/sitemap.xml
