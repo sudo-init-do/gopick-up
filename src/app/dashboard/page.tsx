@@ -3,9 +3,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { useAuth } from "../context/AuthContext";
 
 export default function Dashboard() {
   const [expandedSection, setExpandedSection] = useState<string | null>(null);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const { user } = useAuth();
 
   const toggleSection = (section: string) => {
     setExpandedSection(expandedSection === section ? null : section);
@@ -33,7 +36,12 @@ export default function Dashboard() {
           <div className="flex justify-between items-center h-[70px]">
             {/* Mobile menu button */}
             <div className="lg:hidden">
-              <button className="text-white p-2 hover:bg-white/10 rounded-lg transition-all duration-200 hover:scale-105">
+              <button
+                aria-label="Toggle navigation menu"
+                aria-expanded={mobileOpen}
+                onClick={() => setMobileOpen((o) => !o)}
+                className="text-white p-2 hover:bg-white/10 rounded-lg transition-all duration-200 hover:scale-105"
+              >
                 <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
                 </svg>
@@ -54,7 +62,7 @@ export default function Dashboard() {
 
             {/* Navigation Links - Desktop */}
             <div className="hidden lg:flex space-x-8">
-              <Link href="/home" className="text-white hover:text-white/90 font-medium transition-all duration-200 hover:scale-105 relative group">
+              <Link href="/dashboard" className="text-white hover:text-white/90 font-medium transition-all duration-200 hover:scale-105 relative group">
                 Home
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-white transition-all duration-200 group-hover:w-full"></span>
               </Link>
@@ -62,7 +70,7 @@ export default function Dashboard() {
                 Buy Materials
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-white transition-all duration-200 group-hover:w-full"></span>
               </Link>
-              <Link href="/natural-resources" className="text-white hover:text-white/90 font-medium transition-all duration-200 hover:scale-105 relative group">
+              <Link href="#natural-resources" className="text-white hover:text-white/90 font-medium transition-all duration-200 hover:scale-105 relative group">
                 Natural Resources
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-white transition-all duration-200 group-hover:w-full"></span>
               </Link>
@@ -75,11 +83,11 @@ export default function Dashboard() {
             {/* User Profile */}
             <div className="flex items-center gap-3">
               <span className="text-white text-sm hidden md:block font-light">Welcome</span>
-              <span className="text-white font-semibold hidden md:block">Azih Monica</span>
+              <span className="text-white font-semibold hidden md:block">{user ? `${user.firstName} ${user.lastName}` : "Guest"}</span>
               <div className="w-10 h-10 rounded-full overflow-hidden bg-white shadow-lg ring-2 ring-white/30 hover:ring-white/50 transition-all duration-200 hover:scale-105">
                 <Image
                   src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=100&h=100&fit=crop&crop=face"
-                  alt="User profile picture of Azih Monica"
+                  alt="User profile picture"
                   width={40}
                   height={40}
                   className="w-full h-full object-cover"
@@ -90,8 +98,18 @@ export default function Dashboard() {
         </div>
       </nav>
 
+      {/* Mobile navigation drawer */}
+      <div className={`lg:hidden bg-white shadow-sm border-b border-gray-200 ${mobileOpen ? "block" : "hidden"}`}>
+        <div className="max-w-[1400px] mx-auto px-6 py-3 flex flex-col gap-3">
+          <Link href="/dashboard" className="text-gray-800 font-medium">Home</Link>
+              <Link href="/buy-materials" className="text-gray-800 font-medium">Buy Materials</Link>
+          <a href="#natural-resources" className="text-gray-800 font-medium">Natural Resources</a>
+              <Link href="/press-release" className="text-gray-800 font-medium">Press Release</Link>
+        </div>
+      </div>
+
       {/* Main Content */}
-      <main className="max-w-[1400px] mx-auto px-6 py-10">
+      <main id="home" className="max-w-[1400px] mx-auto px-6 py-10">
         {/* Search Icon */}
         <div className="mb-8">
           <button className="hover:bg-gray-100 p-2 rounded-full transition-colors">
@@ -115,15 +133,15 @@ export default function Dashboard() {
                 priority</span>
               </h1>
 
-              <button className="bg-gradient-to-r from-[#8FD19E] to-[#7BC68D] hover:from-[#7BC68D] hover:to-[#6ABF7D] text-gray-800 px-6 md:px-10 py-3.5 rounded-full font-bold mb-6 md:mb-10 flex items-center gap-3 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105">
+              <Link href="/learn-more" className="bg-gradient-to-r from-[#8FD19E] to-[#7BC68D] hover:from-[#7BC68D] hover:to-[#6ABF7D] text-gray-800 px-6 md:px-10 py-3.5 rounded-full font-bold mb-6 md:mb-10 flex items-center gap-3 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105">
                 Learn more
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
-              </button>
+              </Link>
 
               {/* Coal Section */}
-              <div className="bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50 rounded-2xl p-10 flex items-center justify-between mb-8 border border-gray-200 hover:shadow-xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-1">
+              <div id="buy-materials" className="bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50 rounded-2xl p-10 flex items-center justify-between mb-8 border border-gray-200 hover:shadow-xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-1">
                 <div className="flex-1">
                   <h3 className="text-3xl font-bold text-gray-900 mb-3 bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">Coal</h3>
                   <p className="text-gray-600 text-base mb-6 font-medium">Premium quality coal available for industrial and commercial use</p>
@@ -143,7 +161,7 @@ export default function Dashboard() {
               </div>
 
               {/* Truck Section */}
-              <div className="bg-gradient-to-br from-green-50 via-green-100 to-emerald-50 rounded-2xl p-10 mb-8 border border-green-200 hover:shadow-xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-1">
+              <div id="natural-resources" className="bg-gradient-to-br from-green-50 via-green-100 to-emerald-50 rounded-2xl p-10 mb-8 border border-green-200 hover:shadow-xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-1">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-6">
                     <div className="w-16 h-16 bg-gradient-to-br from-[#4CAF50] to-[#45a049] rounded-full flex items-center justify-center shadow-xl ring-4 ring-white/50">
@@ -172,7 +190,7 @@ export default function Dashboard() {
               </button>
 
               {/* Time is Money Section */}
-              <div className="bg-gradient-to-br from-gray-900 via-gray-800 to-black rounded-2xl overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-300 transform hover:scale-105">
+              <div id="press-release" className="bg-gradient-to-br from-gray-900 via-gray-800 to-black rounded-2xl overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-300 transform hover:scale-105">
                 <div className="relative w-full h-80">
                   <Image
                     src="/Group 4.png"
@@ -191,20 +209,20 @@ export default function Dashboard() {
             {/* Quality Card */}
             <div className="bg-gradient-to-br from-[#4CAF50] to-[#45a049] text-white rounded-2xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-1">
               <h3 className="font-bold text-2xl mb-6 leading-tight bg-gradient-to-r from-white to-gray-100 bg-clip-text text-transparent">Quality at your<br />door step</h3>
-              <button className="text-white hover:text-white/90 text-base font-bold flex items-center gap-3 transition-all duration-300 hover:scale-105 bg-white/10 hover:bg-white/20 px-4 py-2 rounded-full">
+              <Link href="/learn-more" className="text-white hover:text-white/90 text-base font-bold flex items-center gap-3 transition-all duration-300 hover:scale-105 bg-white/10 hover:bg-white/20 px-4 py-2 rounded-full">
                 Learn more
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
-              </button>
+              </Link>
             </div>
 
-            <button className="w-full bg-gradient-to-r from-[#8FD19E] to-[#7BC68D] hover:from-[#7BC68D] hover:to-[#6ABF7D] text-gray-800 px-8 py-4 rounded-full font-bold flex items-center justify-center gap-3 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105">
+            <Link href="/learn-more" className="w-full bg-gradient-to-r from-[#8FD19E] to-[#7BC68D] hover:from-[#7BC68D] hover:to-[#6ABF7D] text-gray-800 px-8 py-4 rounded-full font-bold flex items-center justify-center gap-3 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105">
               Learn more
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
-            </button>
+            </Link>
 
             {/* Delivery Trust Card */}
             <div className="bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 border border-gray-100">
